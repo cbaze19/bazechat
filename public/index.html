@@ -1,1 +1,41 @@
-HELLO WORLD!
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BazeChat</title>
+    <link rel="stylesheet" type="text/css" href="media/css/main.css">
+  </head>
+  <body>
+
+  <div class='wrapper'>
+    <div class='sidebar'>
+      <h>Online Users</h>
+      <ul class='sidebar-list'>
+        <li class='list-item'>Caleb</li>
+        <li class='list-item'>Laura</li>
+        <li class='list-item'>Angela</li>
+      </ul>
+    </div>
+
+    <div class='chat-body'>
+      <table class='chat-table'>
+        <tr>
+          <td>Caleb: Hello there! Hello there! Hello there! Hello there! Hello there!</td>
+        </tr>
+        <tr>
+          <td>Laura: Hello to you too!</td>
+        </tr>
+      </table>
+      <div class='message-div'>
+        <input id='message' type='text'>
+        <input type='submit' value='Send!'>
+      </div>
+    </div>
+
+  </div>
+
+    <script src='/socket.io/socket.io.js'></script>
+    <script src='/media/js/jquery.js'></script>
+    <script src="media/js/chat.js"></script>
+
+  </body>
+</html>
