@@ -7,7 +7,10 @@ $(function() {
 	});
 
 	socket.on('updateUsers', function(clients) {
-		console.log(clients.clients);
+		$('.sidebar-list').html('');
+		clients.forEach(function(client) {
+			$('.sidebar-list').append("<li class='list-item'>" + client + "</li>");
+		});
 	});
 
 });

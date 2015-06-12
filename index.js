@@ -29,22 +29,23 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
 
-var clients = {'clients':[]};
+var clients = [];
 
 io.sockets.on('connection', function(socket) {
 
 	var clientIP = socket.request.connection.remoteAddress;
 	console.log('User connected from ' + clientIP);
 
-	clients.clients.push(socket.id);
-	// console.log(JSON.stringify(xyz));
+	clients.push(socket.id);
 	io.emit('updateUsers', clients);
 
 	socket.on('disconnect', function() {
 		console.log('User Disconnected!');
 
-		var i = clients.clients.indexOf(socket.id);
-		clients.clients.splice(i, 1);
+		var i = clients.indexOf(socket.id);
+		clients.splice(i, 1);
+
+		io.emit('updateUsers', clients);
 	});
 
 });
