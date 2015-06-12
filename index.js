@@ -36,14 +36,14 @@ io.sockets.on('connection', function(socket) {
 	var clientIP = socket.request.connection.remoteAddress;
 	console.log('User connected from ' + clientIP);
 
-	clients.clients.push(socket);
+	clients.clients.push(socket.id);
 	// console.log(JSON.stringify(xyz));
 	io.emit('updateUsers', clients);
 
 	socket.on('disconnect', function() {
 		console.log('User Disconnected!');
 
-		var i = clients.clients.indexOf(socket);
+		var i = clients.clients.indexOf(socket.id);
 		clients.clients.splice(i, 1);
 	});
 
