@@ -29,23 +29,30 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
 
-var clients = [];
+var clients = {'clients':[]};
 
 io.sockets.on('connection', function(socket) {
 
-	var clientIP = socket.request.connection.remoteAddress;
-	console.log('User connected from ' + clientIP);
+	var clientIp = socket.request.connection.remoteAddress;
+	console.log('User connected from ' + clientIp);
 
-	clients.push(socket.id);
-	io.emit('updateUsers', clients);
+	clients.clients.push({'name':socket.id,'id':socket.id});
+
+	io.emit('updateUsers', clients.clients);
+
+	socket.on('nameChange', function(data) {
+		var i = clients.clients.map(function(x) {return x.id}).indexOf(data.id);
+		clients.clients[i].name = data.name;
+		io.emit('updateUsers', clients.clients);
+	});
 
 	socket.on('disconnect', function() {
 		console.log('User Disconnected!');
 
-		var i = clients.indexOf(socket.id);
-		clients.splice(i, 1);
+		var i = clients.clients.map(function(x) {return x.id}).indexOf(socket.id);
+		clients.clients.splice(i, 1);
 
-		io.emit('updateUsers', clients);
+		io.emit('updateUsers', clients.clients);
 	});
 
 });

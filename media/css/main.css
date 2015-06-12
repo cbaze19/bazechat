@@ -53,3 +53,12 @@ html, body {
 .message-div input {
 	display: inline-block;
 }
+
+.name-div {
+	width: 150px;
+}
+
+#name-input {
+	width: 100px;
+	margin: 0;
+}
