@@ -13,7 +13,7 @@ app.use(function(req, res, next) {
       auth = new Buffer(req.headers.authorization.substring(6), 'base64').toString().split(':');
     }
 
-    if (!auth || auth[0] !== 'caleb' || auth[1] !== 'bazer') {
+    if (!auth || auth[0] !== 'caleb' || auth[1] !== 'baze') {
         res.statusCode = 401;
         res.setHeader('WWW-Authenticate', 'Basic realm="BazeChat"');
         res.end('Unauthorized');
@@ -29,10 +29,22 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 });
 
+var clients = {'clients':[]};
+
 io.sockets.on('connection', function(socket) {
 
-	socket.on('disconnect', function() {
+	var clientIP = socket.request.connection.remoteAddress;
+	console.log('User connected from ' + clientIP);
 
+	clients.clients.push(socket);
+	// console.log(JSON.stringify(xyz));
+	io.emit('updateUsers', clients);
+
+	socket.on('disconnect', function() {
+		console.log('User Disconnected!');
+
+		var i = clients.clients.indexOf(socket);
+		clients.clients.splice(i, 1);
 	});
 
 });
